@@ -1,5 +1,15 @@
+import { Header } from "./components/SideBar/styled";
+import GlobalStyle from "./styles/globalStyles";
+
 function App() {
-  return <div>..</div>;
+  return (
+    <>
+      <Header>
+        <p>KAKAKA</p>
+      </Header>
+      <GlobalStyle />
+    </>
+  );
 }
 
 export default App;
