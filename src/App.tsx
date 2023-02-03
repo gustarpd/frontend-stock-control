@@ -1,13 +1,16 @@
-import { Header } from "./components/SideBar/styled";
+import { QueryClient } from "react-query";
+import { BrowserRouter } from "react-router-dom";
+import Theme from "./components/ThemeProvide";
+import { Router } from "./routes/Routes";
 import GlobalStyle from "./styles/globalStyles";
 
 function App() {
   return (
     <>
-      <Header>
-        <p>KAKAKA</p>
-      </Header>
-      <GlobalStyle />
+      <BrowserRouter>
+        <Router />
+        <GlobalStyle />
+      </BrowserRouter>
     </>
   );
 }

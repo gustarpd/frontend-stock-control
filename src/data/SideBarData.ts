@@ -1,10 +1,31 @@
 import { SideBarTypes } from "../types/SideBarTypes";
 import * as Icon from "phosphor-react";
 
-export const SideBarData: SideBarTypes[] = [
+const SideBarData: SideBarTypes[] = [
   {
     title: "DashBoard",
     link: "/",
-    icon: Icon.Airplane,
+  },
+  {
+    title: "Cadastro de produtos",
+    link: "/newproduct",
+  },
+  {
+    title: "Realizar venda",
+    link: "/createsale",
+  },
+  {
+    title: "Vendas",
+    link: "/sales",
+  },
+  {
+    title: "Entradas",
+    link: "/entrance",
+  },
+  {
+    title: "Saídas",
+    link: "/exits",
   },
 ];
+
+export default SideBarData;
