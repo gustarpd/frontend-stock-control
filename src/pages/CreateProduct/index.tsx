@@ -1,10 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import React, { SetStateAction, useEffect, useState } from "react";
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  UseQueryResult,
+} from "react-query";
 import Buttons from "../../components/Button";
 import ContainerProvider from "../../components/ContainerProvider";
+import { Pagination } from "../../components/Pagination";
 import ThemeProvider from "../../components/ThemeProvide";
-import useRequest from "../../hooks/useRequest";
+import { useCurrentPage } from "../../hooks/usePagination";
 import { api } from "../../lib/axios";
+import Product from "../../types/Product";
 import {
   AddButton,
   ColumnContent,
@@ -15,37 +22,102 @@ import {
 } from "./styled";
 
 const CreateProduct: React.FC = () => {
-  const datas = {
-    name: "Cadeira gamer",
-    price: 1234,
-    sale_price: 1000,
-    quantity: 12,
-    due_date: "01/01/2009",
-  };
+  const [searchProduct, setSearchProducts] = useState("");
+  const [nameProductm, setNameProduct] = useState("");
+  const [price, setPrice] = useState("");
+  const [salePrice, setSalePrice] = useState("");
+  const [quantity, setQuantity] = useState("");
+  const [dueDate, setDueDate] = useState("");
 
-  const { data, error, isLoading } = useQuery("product", async () => {
-    const rq = api.post("/products-registration", datas)
+  const { refetch, data, isLoading }: UseQueryResult<Product[] | null, string> =
+    useQuery(
+      "products",
+      async () => {
+        const request = api.get<Product>("/get-products", {
+          params: {
+            name: searchProduct,
+          },
+        });
+        return (await request).data;
+      },
+      {
+        enabled: true,
+      }
+    );
 
-    return rq
-  });
-   
-  console.log(data)
+  const PageSize = 4;
+
+  const { currentItems, currentPage, setCurrentPage } = useCurrentPage(
+    data ? data : [],
+    PageSize
+  );
+  const { mutate } = useMutation(
+    () =>
+      api.post<Product>("/products-registration", {
+        name: nameProductm,
+        price,
+        sale_price: salePrice,
+        quantity,
+        due_date: dueDate,
+      }),
+    {
+      onSuccess: () => alert("Produto adionado com sucesso"),
+    }
+  );
+
+  useEffect(() => {
+    refetch();
+  }, [refetch, searchProduct]);
+
   return (
     <ThemeProvider>
       <ContainerProvider title="Cadastrar produtos">
         <InputContainer>
-          <input placeholder="Nome do produto" />
-          <input placeholder="Preço do produto" />
-          <input placeholder="Preço de venda" />
-          <input placeholder="Data de vencimento" type="date" />
-          <input placeholder="Quantidade" type="number" />
+          <input
+            placeholder="Nome do produto"
+            value={nameProductm}
+            onChange={(e) => setNameProduct(e.target.value)}
+          />
+          <input
+            placeholder="Preço do produto"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+          />
+          <input
+            placeholder="Preço de venda"
+            value={salePrice}
+            onChange={(e) => setSalePrice(e.target.value)}
+          />
+          <input
+            placeholder="Data de vencimento"
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+          />
+          <input
+            placeholder="Quantidade"
+            type="number"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
         </InputContainer>
         <AddButton>
-          <Buttons text="Adicionar" />
+          <span
+            onClick={() => {
+              mutate();
+            }}
+          >
+            <Buttons text="Adicionar" />
+          </span>
         </AddButton>
         <InputContainer>
           <h2>Buscar produto</h2>
-          <input placeholder="Nome do produto" type="text" />
+          <input
+            placeholder="Nome do produto"
+            type="text"
+            value={searchProduct}
+            onChange={(e) => setSearchProducts(e.target.value)}
+          />
           <Buttons text="Buscar produto" />
         </InputContainer>
         <TableProducts>
@@ -57,18 +129,35 @@ const CreateProduct: React.FC = () => {
               <div>Quantidade</div>
               <div>Ações</div>
             </ColumnHeader>
-            <ColumnContent>
-              <div>Teclado games</div>
-              <div>192.32</div>
-              <div>100, 21</div>
-              <div>4</div>
-              <div>
-                <span>Editar</span>
-                <span>Excluir</span>
-              </div>
-            </ColumnContent>
+            <>
+              {data?.length === 0 ? <p>Nenhum produto cadastrado</p> : null}
+              {!isLoading ? (
+                currentItems?.map((item) => {
+                  return (
+                    <ColumnContent>
+                      <div>{item.name}</div>
+                      <div>{item.price}</div>
+                      <div>{item.sale_price}</div>
+                      <div>{item.quantity}</div>
+                      <div>
+                        <span>Editar</span>
+                        <span>Excluir</span>
+                      </div>
+                    </ColumnContent>
+                  );
+                })
+              ) : (
+                <p>Carregando</p>
+              )}
+            </>
           </ColumnHeaderContainer>
         </TableProducts>
+        <Pagination
+          currentPage={currentPage}
+          totalCount={data ? data.length : 10}
+          pageSize={PageSize}
+          onPageChange={(page: number) => setCurrentPage(page)}
+        />
       </ContainerProvider>
     </ThemeProvider>
   );

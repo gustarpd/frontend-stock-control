@@ -5,6 +5,9 @@ export const InputContainer = styled.div`
 
   input {
     padding: 10px 0 10px 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    outline: #000;
     margin: 0 3px 0 0;
   }
 `;
@@ -52,7 +55,7 @@ export const ColumnContent = styled.div`
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid #ccc;
-  padding: 10px 0;
+  padding: 5px 0;
 
   div {
     display: flex;

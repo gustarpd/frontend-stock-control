@@ -10,8 +10,9 @@ export const DetailsExpanse = styled.div`
 export const Main = styled.div`
   width: 100%;
   background-color: #fff;
+  border-radius: 5px;
   padding: 20px;
-  height: 76vh;
+  height: 77vh;
   color: #000;
   margin: 80px 0 0 0;
 `;

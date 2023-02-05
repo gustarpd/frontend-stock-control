@@ -9,10 +9,10 @@ interface Props {
 const ContainerProvider = ({ children, title }: Props) => {
   return (
     <DetailsExpanse>
-        <Main>
-          <h2>{title}</h2>
-          {children}
-        </Main>
+      <Main>
+        <h2>{title}</h2>
+        {children}
+      </Main>
     </DetailsExpanse>
   );
 };

@@ -5,7 +5,7 @@ export const Button = styled.button`
   outline: none;
   cursor: pointer;
   background: #003af6;
+  border-radius: 6px;
   color: #fff;
-  border-radius: 3px;
   padding: 10px 20px;
 `;

@@ -1,4 +1,4 @@
-import { SideBarTypes } from "../types/SideBarTypes";
+import { SideBarTypes } from "../types/SideBar";
 import * as Icon from "phosphor-react";
 
 const SideBarData: SideBarTypes[] = [
