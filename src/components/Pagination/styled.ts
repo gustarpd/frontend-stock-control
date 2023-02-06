@@ -23,5 +23,6 @@ export const ButtonPage = styled.button<Props>`
  cursor: pointer;
  padding: 5px 10px;
  border-radius: 3px;
- margin: 1px 0 0 2px;
+ margin: 9
+ 18px 0 0 2px;
 `

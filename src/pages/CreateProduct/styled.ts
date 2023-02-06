@@ -19,6 +19,10 @@ export const AddButton = styled.div`
   border: 0;
   outline: none;
   padding: 10px;
+
+  span {
+    margin: 0 5px 0 0;
+  }
 `;
 
 export const TableProducts = styled.div`
@@ -54,12 +58,13 @@ export const ColumnContent = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   border-bottom: 1px solid #ccc;
   padding: 5px 0;
 
   div {
     display: flex;
-    margin-top: 10px;
+    margin-top: 5px;
     justify-content: flex-start;
     width: 10rem;
 
@@ -67,4 +72,10 @@ export const ColumnContent = styled.div`
       margin: 0 14px 0 0;
     }
   }
+`;
+
+export const EditContainer = styled.div`
+  width: 100%;
+  height: 100px;
+  background-color: red;
 `;

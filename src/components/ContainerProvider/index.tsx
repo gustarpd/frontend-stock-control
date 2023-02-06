@@ -3,7 +3,7 @@ import { DetailsExpanse, Main } from "./styled";
 
 interface Props {
   children: ReactNode;
-  title: string;
+  title?: string;
 }
 
 const ContainerProvider = ({ children, title }: Props) => {

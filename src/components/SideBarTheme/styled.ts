@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const SideBarContainer = styled.div`
   width: 14rem;
-  height: 90%;
+  height: 89%;
   margin-top: 80px;
   display: flex;
   flex-direction: column;
