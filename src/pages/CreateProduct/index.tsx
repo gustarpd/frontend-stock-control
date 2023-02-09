@@ -7,6 +7,7 @@ import {
 } from "react-query";
 import Buttons from "../../components/Button";
 import ContainerProvider from "../../components/ContainerProvider";
+import InputForm from "../../components/Input/Input";
 import { Pagination } from "../../components/Pagination";
 import ThemeProvider from "../../components/ThemeProvide";
 import { useCurrentPage } from "../../hooks/usePagination";
@@ -49,10 +50,8 @@ const CreateProduct: React.FC = () => {
 
   const PageSize = 3;
 
-  const { currentItems, currentPage, setCurrentPage } = useCurrentPage(
-    data ? data : [],
-    PageSize
-  );
+  const { currentItems, currentPage, setCurrentPage } = useCurrentPage(data ? data : [], PageSize );
+  console.log(data)
   const { mutate } = useMutation(
     () =>
       api.post<Product>("/products-registration", {
@@ -110,28 +109,28 @@ const CreateProduct: React.FC = () => {
 
           <>
             <InputContainer>
-              <input
+              <InputForm
                 placeholder="Nome do produto"
                 value={nameProductm}
                 onChange={(e) => setNameProduct(e.target.value)}
               />
-              <input
+              <InputForm
                 placeholder="Preço do produto"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
               />
-              <input
+              <InputForm
                 placeholder="Preço de venda"
                 value={salePrice}
                 onChange={(e) => setSalePrice(e.target.value)}
               />
-              <input
+              <InputForm
                 placeholder="Data de vencimento"
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
               />
-              <input
+              <InputForm
                 placeholder="Quantidade"
                 type="number"
                 value={quantity}
