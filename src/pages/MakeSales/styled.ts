@@ -6,7 +6,7 @@ export const ProductResults = styled.div`
   padding-bottom: 10px;
   background-color: #d9e0e3;
   border-radius: 3px;
-  margin: 30px auto;
+  margin: 10px auto;
 
   p {
     margin-top: 5px;
@@ -68,7 +68,7 @@ export const ProductDetail = styled.div`
 
   div {
     display: flex;
-    margin-bottom: 120px;
+    /* margin-bottom: 10px; */
     background-color: #d9e0e3;
     border-radius: 3px;
     padding: 10px;
@@ -93,4 +93,10 @@ export const ButtonDelete = styled.div`
  cursor: pointer;
  border-radius: 3px;
  background-color: red;
+`
+
+export const BoxPagination = styled.div`
+width: 72%;
+margin: 16px auto;
+height: 20px;
 `

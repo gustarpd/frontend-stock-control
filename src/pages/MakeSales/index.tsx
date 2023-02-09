@@ -1,12 +1,20 @@
 import React, { useEffect, useState } from "react";
-import { useQuery, UseQueryResult } from "react-query";
+import {
+  useMutation,
+  useQuery,
+  useQueryClient,
+  UseQueryResult,
+} from "react-query";
 import Buttons from "../../components/Button";
 import ContainerProvider from "../../components/ContainerProvider";
 import { Input } from "../../components/Input/styled";
+import { Pagination } from "../../components/Pagination";
 import ThemeProvider from "../../components/ThemeProvide";
+import { useCurrentPage } from "../../hooks/usePagination";
 import { api } from "../../lib/axios";
 import Product from "../../types/Product";
 import {
+  BoxPagination,
   ButtonDelete,
   MakeSaleContainer,
   ProductResults,
@@ -18,10 +26,13 @@ const MakeSales: React.FC = () => {
   const [total, setTotal] = useState(0);
   const [qntd, setQntd] = useState<any[]>([]);
 
-  const { refetch, data }: UseQueryResult<Product[], string> = useQuery(
+  // const queryClient = useQueryClient()
+
+  const PageSize = 2;
+  const getData: UseQueryResult<Product[], string> = useQuery(
     "products",
     async () => {
-      const request = api.get<Product>("/get-products", {
+      const request = api.get<Product>(`/get-product/`, {
         params: {
           name: product,
         },
@@ -33,8 +44,30 @@ const MakeSales: React.FC = () => {
     }
   );
 
+  const add = useMutation(async () => {
+    console.log(productData);
+    const ap = api.post("/add-sold-in", {
+      data: productData,
+    });
+
+    return (await ap).data;
+  }, {
+    onSuccess: () => alert("Venda confirmada!")
+  });
+
+  const { currentItems, currentPage, setCurrentPage } = useCurrentPage(
+    getData.data ? getData.data : [],
+    PageSize
+  );
+
   const [productData, setproductData] = useState<Product[]>([]);
   function addProductData({ id, name, price, quantity, sale_price }: Product) {
+    const productExists = productData.find((itm) => itm.id === id);
+
+    if (productExists) {
+      return alert("Produto já adicionado!");
+    }
+
     setproductData([
       ...productData,
       {
@@ -47,18 +80,37 @@ const MakeSales: React.FC = () => {
     ]);
   }
 
+  useEffect(() => {
+    console.log("Quantidade", qntd);
+    console.log("Pdata", productData);
+  }, [qntd, productData]);
+
   function DeleteSale(id: string) {
-    const deleteProductDeleted = productData.filter((item) => item.id != id);
-    setproductData([...deleteProductDeleted]);
+    const deleteProduct = productData.filter((item) => item.id != id);
+    setproductData([...deleteProduct]);
   }
 
-  function IncrementSale(idx: number, type: boolean) {
-    setQntd([
-      ...productData,
-      type
-        ? (productData[idx].quantity += 1)
-        : (productData[idx].quantity -= 1),
-    ]);
+  function increment(idx: number, type: boolean, price: number, id: string) {
+    if (type) {
+      productData[idx].quantity += 1;
+      setTotal((total) => total + price);
+    }
+
+    if (!type) {
+      productData[idx].quantity === 0
+        ? DeleteSale(id)
+        : (productData[idx].quantity -= 1);
+      setTotal((total) => (total <= 0 ? 0 : total - price));
+    }
+  }
+
+  function IncrementSale(
+    idx: number,
+    type: boolean,
+    price: number,
+    id: string
+  ) {
+    setQntd([...productData, increment(idx, type, price, id)]);
   }
 
   useEffect(() => {
@@ -66,8 +118,8 @@ const MakeSales: React.FC = () => {
   }, [productData]);
 
   useEffect(() => {
-    refetch();
-  }, [product, refetch]);
+    getData.refetch();
+  }, [product, getData.refetch]);
   return (
     <ThemeProvider>
       <ContainerProvider>
@@ -92,7 +144,7 @@ const MakeSales: React.FC = () => {
             <span>Acão</span>
           </div>
           <p>
-            {data?.map((item, index) => {
+            {currentItems?.map((item, index) => {
               return (
                 <div key={index}>
                   <div>{item.name}</div>
@@ -115,6 +167,14 @@ const MakeSales: React.FC = () => {
             })}
           </p>
         </ProductResults>
+        <BoxPagination>
+          <Pagination
+            currentPage={currentPage}
+            totalCount={getData.data ? getData.data.length : 10}
+            pageSize={PageSize}
+            onPageChange={(page: number) => setCurrentPage(page)}
+          />
+        </BoxPagination>
         <MakeSaleContainer>
           {productData.map((item, index) => {
             return (
@@ -124,8 +184,20 @@ const MakeSales: React.FC = () => {
                   <span>Valor: {item.price}</span>
                   <span>QTD: {item.quantity}</span>
                   <span>
-                    <div onClick={() => IncrementSale(index, true)}>+</div>
-                    <div onClick={() => IncrementSale(index, false)}>-</div>
+                    <div
+                      onClick={() =>
+                        IncrementSale(index, true, item.price, item.id)
+                      }
+                    >
+                      +
+                    </div>
+                    <div
+                      onClick={() =>
+                        IncrementSale(index, false, item.price, item.id)
+                      }
+                    >
+                      -
+                    </div>
                   </span>
                   <ButtonDelete onClick={() => DeleteSale(item.id)}>
                     x
@@ -134,7 +206,9 @@ const MakeSales: React.FC = () => {
               </div>
             );
           })}
-          <Buttons type="edit" text="Finalizar venda" />
+          <span onClick={() => add.mutate()}>
+            <Buttons type="edit" text="Finalizar venda" />
+          </span>
           <Buttons type="delete" text="Cancelar venda" />
         </MakeSaleContainer>
       </ContainerProvider>
