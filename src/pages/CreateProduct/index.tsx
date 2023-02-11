@@ -13,6 +13,7 @@ import ThemeProvider from "../../components/ThemeProvide";
 import { useCurrentPage } from "../../hooks/usePagination";
 import { api } from "../../lib/axios";
 import Product from "../../types/Product";
+import currencyFormatter from "../../utils/currency";
 import {
   AddButton,
   ColumnContent,
@@ -183,8 +184,8 @@ const CreateProduct: React.FC = () => {
                           return (
                             <ColumnContent>
                               <div>{item.name}</div>
-                              <div>{item.price}</div>
-                              <div>{item.sale_price}</div>
+                              <div>{currencyFormatter(item.price, 'BRL', 'pt-BR')}</div>
+                              <div>{currencyFormatter(item.sale_price, 'BRL', 'pt-BR')}</div>
                               <div>{item.quantity}</div>
                               <div>
                                 <span

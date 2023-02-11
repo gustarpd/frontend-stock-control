@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  useMutation,
-  useQuery,
-  useQueryClient,
-  UseQueryResult,
-} from "react-query";
+import { useMutation, useQuery, UseQueryResult } from "react-query";
 import Buttons from "../../components/Button";
 import ContainerProvider from "../../components/ContainerProvider";
 import { Input } from "../../components/Input/styled";
@@ -13,6 +8,7 @@ import ThemeProvider from "../../components/ThemeProvide";
 import { useCurrentPage } from "../../hooks/usePagination";
 import { api } from "../../lib/axios";
 import Product from "../../types/Product";
+import currencyFormatter from "../../utils/currency";
 import {
   BoxPagination,
   ButtonDelete,
@@ -25,8 +21,6 @@ const MakeSales: React.FC = () => {
   const [product, setProduct] = useState("");
   const [total, setTotal] = useState(0);
   const [qntd, setQntd] = useState<any[]>([]);
-
-  // const queryClient = useQueryClient()
 
   const PageSize = 2;
   const getData: UseQueryResult<Product[], string> = useQuery(
@@ -44,16 +38,19 @@ const MakeSales: React.FC = () => {
     }
   );
 
-  const add = useMutation(async () => {
-    console.log(productData);
-    const ap = api.post("/add-sold-in", {
-      data: productData,
-    });
+  const add = useMutation(
+    async () => {
+      console.log(productData);
+      const ap = api.post("/add-sold-in", {
+        data: productData,
+      });
 
-    return (await ap).data;
-  }, {
-    onSuccess: () => alert("Venda confirmada!")
-  });
+      return (await ap).data;
+    },
+    {
+      onSuccess: () => alert("Venda confirmada!"),
+    }
+  );
 
   const { currentItems, currentPage, setCurrentPage } = useCurrentPage(
     getData.data ? getData.data : [],
@@ -123,18 +120,22 @@ const MakeSales: React.FC = () => {
   return (
     <ThemeProvider>
       <ContainerProvider>
-        <h2>Frente de caixa</h2>
         <SelectProductInput>
           <div>
-            <Input
-              placeholder="Nome do produto"
-              value={product}
-              onChange={(e) => setProduct(e.target.value)}
-            />
-            <Buttons type="edit" text="Buscar" />
+            <div>
+              <h2>Frente de caixa</h2>
+            </div>
+            <div>
+              <Input
+                placeholder="Nome do produto"
+                value={product}
+                onChange={(e) => setProduct(e.target.value)}
+              />
+              <Buttons type="edit" text="Buscar" />
+            </div>
           </div>
           <div>
-            <p>{`TOTAL: R$ ${Math.round(total)}`}</p>
+            <p>TOTAL: {currencyFormatter(total, "BRL", "pt-BR")}</p>
           </div>
         </SelectProductInput>
         <ProductResults>
@@ -148,7 +149,7 @@ const MakeSales: React.FC = () => {
               return (
                 <div key={index}>
                   <div>{item.name}</div>
-                  <div>{item.price}</div>
+                  <div>{currencyFormatter(item.price, "BRL", "pt-BR")}</div>
                   <span
                     onClick={() => {
                       addProductData({
@@ -176,40 +177,45 @@ const MakeSales: React.FC = () => {
           />
         </BoxPagination>
         <MakeSaleContainer>
-          {productData.map((item, index) => {
-            return (
-              <div key={index}>
-                <p>
-                  <span>Nome: {item.name}</span>
-                  <span>Valor: {item.price}</span>
-                  <span>QTD: {item.quantity}</span>
-                  <span>
-                    <div
-                      onClick={() =>
-                        IncrementSale(index, true, item.price, item.id)
-                      }
-                    >
-                      +
-                    </div>
-                    <div
-                      onClick={() =>
-                        IncrementSale(index, false, item.price, item.id)
-                      }
-                    >
-                      -
-                    </div>
-                  </span>
-                  <ButtonDelete onClick={() => DeleteSale(item.id)}>
-                    x
-                  </ButtonDelete>
-                </p>
-              </div>
-            );
-          })}
-          <span onClick={() => add.mutate()}>
-            <Buttons type="edit" text="Finalizar venda" />
-          </span>
-          <Buttons type="delete" text="Cancelar venda" />
+          {productData.length > 0 ? (
+            <>
+              {productData.map((item, index) => {
+                return (
+                  <div key={index}>
+                    <p>
+                      <span>Nome: {item.name}</span>
+                      <span>
+                        Valor: {currencyFormatter(item.price, "BRL", "pt-BR")}
+                      </span>
+                      <span>QTD: {item.quantity}</span>
+                      <span>
+                        <div
+                          onClick={() =>
+                            IncrementSale(index, true, item.price, item.id)
+                          }
+                        >
+                          +
+                        </div>
+                        <div
+                          onClick={() =>
+                            IncrementSale(index, false, item.price, item.id)
+                          }
+                        >
+                          -
+                        </div>
+                      </span>
+                      <ButtonDelete onClick={() => DeleteSale(item.id)}>
+                        x
+                      </ButtonDelete>
+                    </p>
+                  </div>
+                );
+              })}
+              <span onClick={() => add.mutate()}>
+                <Buttons type="edit" text="Finalizar venda" />
+              </span>
+            </>
+          ) : null}
         </MakeSaleContainer>
       </ContainerProvider>
     </ThemeProvider>

@@ -6,7 +6,7 @@ export const ProductResults = styled.div`
   padding-bottom: 10px;
   background-color: #d9e0e3;
   border-radius: 3px;
-  margin: 10px auto;
+  margin: 40px auto;
 
   p {
     margin-top: 5px;
@@ -42,7 +42,6 @@ export const MakeSaleContainer = styled.div`
   border: 1px solid #d9e0e3;
   margin: 5px auto;
   padding: 10px;
-  
 
   p {
     width: 98%;
@@ -87,16 +86,16 @@ export const SelectProductInput = styled.div`
 `;
 
 export const ButtonDelete = styled.div`
- text-align: center;
- color: #fff;
- padding: 2px 10px;
- cursor: pointer;
- border-radius: 3px;
- background-color: red;
-`
+  text-align: center;
+  color: #fff;
+  padding: 2px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  background-color: red;
+`;
 
 export const BoxPagination = styled.div`
-width: 72%;
-margin: 16px auto;
-height: 20px;
-`
+  width: 72%;
+  margin: 16px auto;
+  height: 20px;
+`;
