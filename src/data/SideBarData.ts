@@ -19,10 +19,6 @@ const SideBarData: SideBarTypes[] = [
     link: "/sales",
   },
   {
-    title: "Entradas",
-    link: "/entrance",
-  },
-  {
     title: "Saídas",
     link: "/exits",
   },

@@ -3,9 +3,9 @@ import styled from "styled-components";
 export const ProductResults = styled.div`
   width: 72%;
   height: auto;
-  padding-bottom: 10px;
-  background-color: #d9e0e3;
+  padding: 10px 0;
   border-radius: 3px;
+  border: 1px solid #CCC;
   margin: 40px auto;
 
   p {

@@ -19,7 +19,7 @@ import {
 
 const MakeSales: React.FC = () => {
   const [product, setProduct] = useState("");
-  const [total, setTotal] = useState(0);
+  const [totalAmount, setTotal] = useState(0);
   const [qntd, setQntd] = useState<any[]>([]);
 
   const PageSize = 2;
@@ -33,9 +33,6 @@ const MakeSales: React.FC = () => {
       });
       return (await request).data;
     },
-    {
-      enabled: true,
-    }
   );
 
   const add = useMutation(
@@ -90,14 +87,14 @@ const MakeSales: React.FC = () => {
   function increment(idx: number, type: boolean, price: number, id: string) {
     if (type) {
       productData[idx].quantity += 1;
-      setTotal((total) => total + price);
+      return setTotal((total) => total + price);
     }
 
     if (!type) {
       productData[idx].quantity === 0
         ? DeleteSale(id)
         : (productData[idx].quantity -= 1);
-      setTotal((total) => (total <= 0 ? 0 : total - price));
+      return setTotal((total) => (total <= 0 ? 0 : total - price));
     }
   }
 
@@ -135,7 +132,7 @@ const MakeSales: React.FC = () => {
             </div>
           </div>
           <div>
-            <p>TOTAL: {currencyFormatter(total, "BRL", "pt-BR")}</p>
+            <p>TOTAL: {currencyFormatter(totalAmount, "BRL", "pt-BR")}</p>
           </div>
         </SelectProductInput>
         <ProductResults>
