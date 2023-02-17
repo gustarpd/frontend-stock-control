@@ -7,6 +7,7 @@ import {
   CreateExitContainer,
   ExitsColumn,
   ExitsTable,
+  ExitTableHeader,
   ListExits,
   TitleHeader,
 } from "./styled";
@@ -47,19 +48,19 @@ const Exits: React.FC = () => {
           </div>
         </ListExits>
         <ExitsTable>
-          <div>
+          <ExitTableHeader>
             <span>Descrição</span>
             <span>Valor</span>
             <span>Data</span>
             <span>Ações</span>
-          </div>
+          </ExitTableHeader>
           <ExitsColumn>
             <div>Conta Àgua</div>
             <div>2322R$</div>
             <div>10/02/2001</div>
             <div>
-            <Buttons text="Editar" type={"edit"}></Buttons>
-            <Buttons text="Deletar" type={"edit"}></Buttons>
+              <Buttons text="Editar" type={"edit"}></Buttons>
+              <Buttons text="Deletar" type={"edit"}></Buttons>
             </div>
           </ExitsColumn>
         </ExitsTable>

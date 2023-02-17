@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const CreateExitContainer = styled.div`
-  width: 70%;
+  width: 90%;
   height: auto;
   display: flex;
   margin: 0 auto;
@@ -9,7 +9,7 @@ export const CreateExitContainer = styled.div`
   justify-content: space-between;
 
   div {
-    width: 70%;
+    width: 90%;
     display: flex;
 
     input {
@@ -23,7 +23,7 @@ export const CreateExitContainer = styled.div`
 `;
 
 export const TitleHeader = styled.div`
-  width: 70%;
+  width: 90%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -38,7 +38,7 @@ export const TitleHeader = styled.div`
 `;
 
 export const ListExits = styled.div`
-  width: 70%;
+  width: 90%;
   height: auto;
   margin: 30px auto;
 
@@ -52,34 +52,40 @@ export const ListExits = styled.div`
   }
 
   button {
-    margin: 0 0 0 30px;
+    margin: 0 320px 0 30px;
   }
 `;
 export const ExitsTable = styled.div`
-  width: 68%;
+  width: 90%;
   padding: 10px;
   height: auto;
-  background-color: red;
   margin: 0 auto;
 
   div {
     display: flex;
     justify-content: space-between;
   }
+`;
 
-  div:nth-child(3) {
-    background-color: yellow;
+export const ExitTableHeader = styled.div`
+  border-bottom: 1px solid #ccc;
+
+  span {
+    width: 18%;
+    margin-bottom: 10px;
   }
 `;
+
 export const ExitsColumn = styled.div`
   width: 100%;
   text-align: center;
   align-items: center;
-  background-color: red;
-  background-color: azure;
 
   div {
-    width: 12rem;
-    background-color: blue;
+    margin: 10px 0 0 0;
+    width: 10rem;
+  }
+  button {
+    margin: 0 10px 0 0;
   }
 `;
