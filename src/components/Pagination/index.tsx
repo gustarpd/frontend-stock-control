@@ -26,7 +26,7 @@ export const Pagination = (props: Props) => {
     pageSize,
   });
 
-  if (currentPage === 0 || paginationRange.length < 2) {
+  if (currentPage === 0 || paginationRange?.length < 2) {
     return null;
   }
 
@@ -39,7 +39,7 @@ export const Pagination = (props: Props) => {
       <ArrowRight disp={currentPage === 1 ? true : false} onClick={onPrevious}>
         <ButtonPage>&lt;</ButtonPage>
       </ArrowRight>
-      {paginationRange.map((item: any) => {
+      {paginationRange?.map((item: any) => {
         if (item === DOTS) {
           return <div>&#8230;</div>;
         }

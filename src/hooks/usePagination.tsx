@@ -10,7 +10,6 @@ interface Props {
 }
 
 
- 
 export const DOTS = '...';
 
 const range = (start: number, end: number) => {

@@ -77,7 +77,7 @@ export const ExitTableHeader = styled.div`
 `;
 
 export const ExitsColumn = styled.div`
-  width: 100%;
+  width: 96%;
   text-align: center;
   align-items: center;
 
@@ -85,6 +85,12 @@ export const ExitsColumn = styled.div`
     margin: 10px 0 0 0;
     width: 10rem;
   }
+  
+  span {
+    text-align: start;
+    width: 120px;
+  }
+
   button {
     margin: 0 10px 0 0;
   }
