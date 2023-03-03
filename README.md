@@ -7,13 +7,19 @@ Sistema de controle de estoque e vendas com recursos para gerenciamento de uma l
 
 ## Ferramentas utilizadas neste projeto:
 
-- ReactJs
-- TypeScript
-- Styled-components
-- Axios
-- MomentJs
-- React-router-dom
-- React-Query
+   - ReactJs: biblioteca JavaScript de código aberto para criação de interfaces de usuário
+
+  - TypeScript: O TypeScript é um superset do JavaScript que adiciona tipos estáticos opcionais à linguagem. Ele ajuda a escrever código mais legível e seguro, detectando erros de digitação em tempo de compilação. É bastante utilizado em projetos grandes e complexos, em que a manutenção do código pode se tornar difícil.
+
+  - Styled-components: O Styled-components é uma biblioteca que permite escrever estilos em CSS diretamente no código JavaScript.
+
+   - Axios: O Axios é um cliente HTTP baseado em Promises para fazer requisições a APIs externas a partir do código JavaScript. 
+
+   - MomentJs: O MomentJs é uma biblioteca JavaScript que ajuda a trabalhar com datas e horários de maneira fácil e intuitiva.
+
+  - React-router-dom: O React-router-dom é uma biblioteca que fornece uma maneira de navegar entre páginas em uma aplicação React.
+
+   - React-Query: O React-Query é uma biblioteca que fornece uma maneira fácil e eficiente de buscar e gerenciar dados em uma aplicação React.
 
 ### Como executar o projeto
 
