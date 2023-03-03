@@ -30,7 +30,7 @@ Para executar este projeto, você precisa ter o Node.js e o TypeScript instalado
 
 Após a instalação dessas ferramentas, siga as etapas abaixo para executar o projeto:
 1. Abra o terminal e execute o `git clone https://github.com/gustarpd/frontend-stock-control.git`
-2. Abra o a pasta do projeto `cd frontend-stock-control`
+2. Abra a pasta do projeto `cd frontend-stock-control`
 4. Execute o comando `npm install` para instalar todas as dependências necessárias.
 5. Depois que a instalação estiver concluída, execute o comando `npm run dev` para iniciar o servidor local.
 6. Abra o navegador e acesse o endereço `http://localhost:5173/` para visualizar a aplicação em execução.
