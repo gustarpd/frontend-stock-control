@@ -5,7 +5,7 @@ Frontend de uma aplicação de gerenciamento de estoque e vendas desenvolvido em
 ### Descrição
 Sistema de controle de estoque e vendas com recursos para gerenciamento de uma loja de informática, controle de gastos do mês e gerenciamento de produtos.
 
-## Ferramentas utilizadas neste projeto:
+### Ferramentas utilizadas neste projeto:
 
    - ReactJs: biblioteca JavaScript de código aberto para criação de interfaces de usuário
 
